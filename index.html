@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Titi Boom Party · Renta de inflables en Monterrey</title>
+<meta name="description" content="Renta de inflables, trampolín, brincolín acuático, mesas, sillas y juegos infantiles en Monterrey y área metropolitana. Cotiza tu fiesta en línea.">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: barra superior (logo · navegación · acceso admin), portada, paquetes, cotizador en dos columnas, contacto */
+:root{
+  --ink:#2b1846; --muted:#6b5a85; --bg:#fff7fb; --card:#ffffff; --line:#f1dcec;
+  --pink:#ff3e9a; --purple:#7a3cf0; --yellow:#ffd23f; --sky:#4fc3ff; --mint:#3ed6a5;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance}
+h2{font-size:clamp(30px,4.4vw,44px)}
+h2 .hl{color:var(--pink)}
+.lead{color:var(--muted);max-width:640px;margin:8px 0 0}
+/* barra */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,247,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;min-height:66px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{width:46px;height:46px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 2px 8px rgba(122,60,240,.25)}
+.brand b{font-family:var(--display);font-size:22px;letter-spacing:.2px}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{text-decoration:none;font-weight:700;font-size:15px;padding:8px 12px;border-radius:999px;color:var(--muted)}
+.nav a:hover{background:#fde6f2;color:var(--ink)}
+.admin{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font:700 13px var(--body);padding:8px 13px;border-radius:999px;border:1.5px solid #d9c9ee;color:var(--muted);background:#fff;white-space:nowrap}
+.admin:hover{border-color:var(--purple);color:var(--purple)}
+.admin svg{width:15px;height:15px}
+@media (max-width:820px){.nav{display:none}.admin{margin-left:auto}.admin span{display:none}}
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font:800 16px var(--body);text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.pink{background:var(--pink);color:#fff;box-shadow:0 6px 0 #c41f72}
+.btn.wa{background:#25d366;color:#fff;box-shadow:0 6px 0 #179a4a}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:0 0 0 2px var(--line) inset}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.btn svg{width:20px;height:20px}
+:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+/* portada */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 12% 20%,#ffd9ec 0 120px,transparent 121px),
+  radial-gradient(circle at 92% 12%,#dff3ff 0 140px,transparent 141px),
+  radial-gradient(circle at 80% 95%,#fff1c2 0 160px,transparent 161px),
+  linear-gradient(180deg,#fff7fb,#f6efff)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding-top:46px;padding-bottom:56px}
+.hero h1{font-size:clamp(40px,6.4vw,72px);font-weight:800}
+.hero h1 .a{color:var(--pink)} .hero h1 .b{color:var(--purple)}
+.hero p{font-size:19px;color:var(--muted);max-width:520px;margin:14px 0 22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:700;font-size:14px}
+.chip i{font-style:normal;margin-right:4px}
+.art{position:relative}
+.art svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 24px rgba(122,60,240,.18))}
+.badge{position:absolute;right:4%;top:6%;background:var(--yellow);border-radius:50%;width:118px;height:118px;display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;line-height:1;transform:rotate(10deg);box-shadow:0 8px 0 #e5b400}
+.badge b{display:block;font-size:30px}
+.badge small{font-size:14px}
+.confetti{position:absolute;inset:0;pointer-events:none;background-image:
+ radial-gradient(var(--pink) 3px,transparent 4px),radial-gradient(var(--sky) 3px,transparent 4px),radial-gradient(var(--yellow) 3px,transparent 4px),radial-gradient(var(--mint) 3px,transparent 4px);
+ background-size:170px 150px,210px 190px,150px 230px,260px 170px;background-position:20px 30px,90px 110px,140px 40px,40px 160px;opacity:.55}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.art{max-width:440px;margin:0 auto}}
+/* secciones */
+section{padding:62px 0}
+.grid{display:grid;gap:18px}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:900px){.g3{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.g3{grid-template-columns:1fr}}
+.pk{background:var(--card);border-radius:24px;padding:20px;border:2px solid var(--line);display:flex;flex-direction:column;gap:10px;position:relative}
+.pk .tag{position:absolute;top:-12px;left:18px;background:var(--c,var(--pink));color:#fff;font:800 12px var(--body);text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:999px}
+.pk h3{font-size:25px;margin-top:6px}
+.pk .price{font-family:var(--display);font-weight:800;font-size:38px;color:var(--c,var(--pink));line-height:1;font-variant-numeric:tabular-nums}
+.pk .price small{font-size:15px;color:var(--muted);font-family:var(--body);font-weight:700}
+.pk ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:15px}
+.pk li::before{content:"✓";color:var(--mint);font-weight:800;margin-right:7px}
+.pk .btn{margin-top:auto;align-self:flex-start;padding:10px 16px;font-size:15px}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+.strip div{background:#fff;border-radius:18px;padding:14px 16px;border:2px dashed #e7cdee;font-size:15px}
+.strip b{display:block;font-family:var(--display);font-size:20px}
+@media (max-width:820px){.strip{grid-template-columns:1fr 1fr}}
+/* cotizador */
+#cotizar{background:linear-gradient(180deg,#f6efff,#fff7fb)}
+.cz{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;margin-top:26px;align-items:start}
+@media (max-width:900px){.cz{grid-template-columns:1fr}}
+.box{background:#fff;border-radius:24px;padding:22px;border:2px solid var(--line)}
+.step{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:22px;margin:4px 0 12px}
+.step i{font-style:normal;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--purple);color:#fff;font-size:17px}
+.box hr{border:0;border-top:2px dashed var(--line);margin:22px 0}
+.f{display:grid;gap:12px}
+.f2{grid-template-columns:1fr 1fr}
+@media (max-width:560px){.f2{grid-template-columns:1fr}}
+label{display:block;font-weight:800;font-size:14px;margin-bottom:5px}
+.hint{font-size:13px;color:var(--muted);font-weight:600;margin-top:4px}
+input,select,textarea{width:100%;font:600 16px var(--body);color:var(--ink);background:#fffafd;border:2px solid #ead7ea;border-radius:14px;padding:11px 12px}
+input:focus,select:focus,textarea:focus{border-color:var(--purple);outline:none}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.opt span{display:block;border:2px solid #ead7ea;border-radius:16px;padding:12px;font-weight:800;line-height:1.25;height:100%;background:#fffafd}
+.opt span em{display:block;font-style:normal;color:var(--pink);font-family:var(--display);font-size:22px;margin-top:2px}
+.opt span small{display:block;color:var(--muted);font-weight:600;font-size:13px}
+.opt input:checked+span{border-color:var(--purple);background:#f3ecff;box-shadow:0 0 0 3px #e3d4ff}
+.opt input:focus-visible+span{outline:3px solid var(--purple);outline-offset:2px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:40px;height:40px;border-radius:12px;border:2px solid #ead7ea;background:#fff;font:800 20px var(--body);cursor:pointer;color:var(--ink)}
+.qty input{text-align:center;width:70px}
+.sum{position:sticky;top:84px}
+.sum h3{font-size:26px}
+.lines{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:14px 0;font-size:15px;font-variant-numeric:tabular-nums}
+.lines dt{color:var(--muted);font-weight:700} .lines dd{margin:0;text-align:right;font-weight:800}
+.total{border-top:2px dashed var(--line);padding-top:12px;margin-top:4px}
+.total b{display:block;font-family:var(--display);font-size:42px;line-height:1;color:var(--pink);font-variant-numeric:tabular-nums}
+.total small{color:var(--muted);font-weight:700}
+.miss{background:#fff4d6;border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700;margin:12px 0;color:#7a5a00}
+.miss ul{margin:4px 0 0;padding-left:18px;font-weight:600}
+.ok{background:#e2f8ef;color:#0f6b48;border-radius:14px;padding:10px 12px;font-size:14px;font-weight:800;margin:12px 0}
+.fine{font-size:12.5px;color:var(--muted);margin-top:12px}
+/* contacto */
+.contact{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.ct{background:#fff;border:2px solid var(--line);border-radius:22px;padding:18px;text-decoration:none;display:flex;gap:14px;align-items:center}
+.ct:hover{border-color:var(--purple)}
+.ct .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;color:#fff;flex:none}
+.ct .ic svg{width:28px;height:28px}
+.ct b{display:block;font-family:var(--display);font-size:21px}
+.ct span{color:var(--muted);font-weight:700;font-size:14px}
+@media (max-width:820px){.contact{grid-template-columns:1fr}}
+footer{background:var(--ink);color:#e9dcff;padding:26px 0;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.float{position:fixed;right:18px;bottom:18px;z-index:30;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.float svg{width:32px;height:32px;fill:#fff}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="logo.webp" alt="Logo de Titi Boom Party" width="46" height="46"><b>Titi Boom Party</b></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#paquetes">Paquetes</a><a href="#cotizar">Cotizar</a><a href="#contacto">Contacto</a>
+    </nav>
+    <a class="admin" href="admin/" title="Acceso para el administrador de riesgos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <span>Administrador de riesgos</span>
+    </a>
+  </div>
+</header>
+
+<main>
+<div class="hero" id="inicio">
+  <div class="confetti"></div>
+  <div class="wrap">
+    <div>
+      <h1><span class="a">¡La diversión</span> salta más alto <span class="b">con nosotros!</span></h1>
+      <p>Renta de inflables, trampolín, brincolín acuático, mesas, sillas y juegos infantiles. Llevamos, instalamos y recogemos en Monterrey y su área metropolitana.</p>
+      <div class="chips" style="margin:0 0 22px">
+        <span class="chip"><i>⏰</i>5 horas + 1 de regalo</span>
+        <span class="chip"><i>🚚</i>Instalación sin costo</span>
+        <span class="chip"><i>💵</i>Pagas al instalar</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a class="btn pink" href="#cotizar">Cotiza tu fiesta</a>
+        <a class="btn wa js-wa" href="https://wa.me/528128946573" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>WhatsApp</a>
+      </div>
+    </div>
+    <div class="art">
+      <svg viewBox="0 0 420 360" role="img" aria-label="Ilustración de un castillo inflable">
+        <ellipse cx="210" cy="338" rx="190" ry="16" fill="#e8d9f7"/>
+        <rect x="40" y="262" width="340" height="70" rx="22" fill="#4fc3ff"/>
+        <rect x="40" y="262" width="340" height="22" rx="11" fill="#7fd6ff"/>
+        <rect x="70" y="130" width="280" height="140" rx="16" fill="#ff3e9a"/>
+        <rect x="104" y="160" width="212" height="110" rx="12" fill="#ffe3f1"/>
+        <g fill="#7a3cf0"><rect x="104" y="160" width="26" height="110"/><rect x="290" y="160" width="26" height="110"/><rect x="197" y="160" width="26" height="110"/></g>
+        <rect x="40" y="96" width="62" height="190" rx="14" fill="#ffd23f"/>
+        <rect x="318" y="96" width="62" height="190" rx="14" fill="#ffd23f"/>
+        <path d="M30 104 71 34l41 70Z" fill="#7a3cf0"/><path d="M308 104l41-70 41 70Z" fill="#7a3cf0"/>
+        <circle cx="71" cy="30" r="8" fill="#3ed6a5"/><circle cx="349" cy="30" r="8" fill="#3ed6a5"/>
+        <path d="M70 130q35-34 70 0t70 0 70 0 70 0" fill="none" stroke="#ffd23f" stroke-width="14" stroke-linecap="round"/>
+        <g fill="#fff" opacity=".9"><circle cx="150" cy="300" r="7"/><circle cx="210" cy="306" r="7"/><circle cx="270" cy="300" r="7"/></g>
+        <g><ellipse cx="398" cy="170" rx="18" ry="22" fill="#4fc3ff"/><path d="M398 192v46" stroke="#b9a7d6" stroke-width="2"/><ellipse cx="22" cy="200" rx="18" ry="22" fill="#ff3e9a"/><path d="M22 222v40" stroke="#b9a7d6" stroke-width="2"/></g>
+      </svg>
+      <div class="badge"><div><small>desde</small><b>$550</b><small>+ flete</small></div></div>
+    </div>
+  </div>
+</div>
+
+<section id="paquetes">
+  <div class="wrap">
+    <h2>Nuestros <span class="hl">paquetes</span></h2>
+    <p class="lead">Todos se rentan por 5 horas y te regalamos 1 hora extra. Precios de nuestras promociones en Facebook; el flete se suma según tu zona.</p>
+    <div class="grid g3" id="pkGrid" style="margin-top:26px"></div>
+    <div class="strip">
+      <div><b>Mesa + 10 sillas extra</b>$250 cada juego</div>
+      <div><b>Juego extra</b>Billar, futbolito o boliche: $500</div>
+      <div><b>Flete</b>De $250 a $650 según tu ubicación</div>
+      <div><b>Temáticas</b>Lonas de tus personajes favoritos para el inflable</div>
+    </div>
+  </div>
+</section>
+
+<section id="cotizar">
+  <div class="wrap">
+    <h2>Cotiza <span class="hl">en línea</span></h2>
+    <p class="lead">Llena los datos de tu fiesta y te damos un precio estimado al momento. Cuando esté completo, mándalo por WhatsApp para confirmar disponibilidad.</p>
+    <div class="cz">
+      <form class="box" id="cz" novalidate>
+        <div class="step"><i>1</i>Elige tu paquete</div>
+        <div class="opts" id="pkOpts"></div>
+        <div class="f f2" style="margin-top:14px">
+          <div id="wrapTema"><label for="tema">Temática del inflable</label><select id="tema"></select></div>
+          <div id="wrapJuego"><label for="juego">Juego incluido</label><select id="juego"><option value="">Elige uno</option><option>Billar</option><option>Futbolito</option><option>Boliche</option></select></div>
+        </div>
+        <hr>
+        <div class="step"><i>2</i>¿Cuándo y dónde?</div>
+        <div class="f f2">
+          <div><label for="fecha">Fecha de la fiesta</label><input type="date" id="fecha"><div class="hint" id="diaHint">De lunes a jueves algunos paquetes salen más baratos.</div></div>
+          <div><label for="hora">Hora de inicio</label><input type="time" id="hora" step="900"><div class="hint">Llegamos antes para instalar.</div></div>
+          <div><label for="muni">Municipio</label><select id="muni"></select></div>
+          <div><label for="colonia">Colonia</label><input type="text" id="colonia" placeholder="Ej. Anáhuac" autocomplete="address-level3"></div>
+        </div>
+        <hr>
+        <div class="step"><i>3</i>Extras</div>
+        <div class="f f2">
+          <div><label for="mesas">Juegos extra de mesa + 10 sillas</label><div class="qty"><button type="button" data-q="mesas" data-d="-1" aria-label="Quitar mesa">−</button><input type="number" id="mesas" min="0" max="10" value="0" inputmode="numeric"><button type="button" data-q="mesas" data-d="1" aria-label="Agregar mesa">+</button></div><div class="hint">$250 cada uno</div></div>
+          <div><label for="juegos">Juegos infantiles extra</label><div class="qty"><button type="button" data-q="juegos" data-d="-1" aria-label="Quitar juego">−</button><input type="number" id="juegos" min="0" max="3" value="0" inputmode="numeric"><button type="button" data-q="juegos" data-d="1" aria-label="Agregar juego">+</button></div><div class="hint">Billar, futbolito o boliche · $500 c/u</div></div>
+          <div><label for="ninos">Niños aproximados</label><input type="number" id="ninos" min="1" max="200" placeholder="Ej. 15" inputmode="numeric"></div>
+          <div><label for="nombre">Tu nombre</label><input type="text" id="nombre" placeholder="Para la cotización" autocomplete="given-name"></div>
+        </div>
+      </form>
+
+      <aside class="box sum" aria-live="polite">
+        <h3>Tu cotización</h3>
+        <dl class="lines" id="lines"></dl>
+        <div class="total"><small>Total estimado</small><b id="tot">—</b><small id="totNote"></small></div>
+        <div id="state"></div>
+        <a class="btn wa" id="send" href="#" target="_blank" rel="noopener" style="width:100%" aria-disabled="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>Enviar cotización por WhatsApp</a>
+        <p class="fine">Precio estimado. El flete y la disponibilidad se confirman por WhatsApp. Pago al momento de la instalación, en efectivo o transferencia.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap">
+    <h2>¡Aparta tu <span class="hl">fecha!</span></h2>
+    <p class="lead">Escríbenos para dudas, disponibilidad o paquetes a tu medida. Servicio en Monterrey y área metropolitana.</p>
+    <div class="contact">
+      <a class="ct js-wa" href="https://wa.me/528128946573" target="_blank" rel="noopener"><span class="ic" style="background:#25d366"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg></span><div><b>WhatsApp</b><span>81 2894 6573</span></div></a>
+      <a class="ct" href="https://www.facebook.com/profile.php?id=61581492188724" target="_blank" rel="noopener"><span class="ic" style="background:#1877f2"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.9c0-.6.3-.9.9-.9Z"/></svg></span><div><b>Facebook</b><span>Titi Boom Party</span></div></a>
+      <a class="ct" href="https://www.instagram.com/titi.boom.party/" target="_blank" rel="noopener"><span class="ic" style="background:linear-gradient(45deg,#f9a825,#e91e63,#7a3cf0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span><div><b>Instagram</b><span>@titi.boom.party</span></div></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Titi Boom Party · Renta de inflables en Monterrey, N.L.</span><span>¡Hacemos que cada fiesta brinque de alegría!</span></div></footer>
+<a class="float js-wa" href="https://wa.me/528128946573" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg></a>
+
+<script>
+(function(){
+"use strict";
+/* ===== Precios (de las publicaciones de Facebook). Edita aquí para actualizarlos. ===== */
+var WA="528128946573";
+var PAQ=[
+ {id:"panimate",nombre:"Paquete Panímate",c:"#ff3e9a",tag:"El más pedido",lj:550,vd:650,incluye:["1 inflable a elegir","5 horas + 1 hora de regalo","Entrega e instalación"],tema:true},
+ {id:"fiesta",nombre:"Súper Paquete Fiesta",c:"#7a3cf0",tag:"Con mobiliario",precio:1000,incluye:["1 inflable a elegir","1 mesa infantil + 10 sillas","5 horas + 1 hora de regalo"],tema:true},
+ {id:"kpop",nombre:"Paquete K-Pop",c:"#e91e63",tag:"Temático",precio:1000,incluye:["Inflable con lona K-Pop","1 mesa infantil + 10 sillas","5 horas + 1 hora de regalo"]},
+ {id:"bomba",nombre:"Paquete Bomba Titi",c:"#ff8a00",tag:"Todo incluido",precio:1100,incluye:["Inflable con tu personaje favorito","1 mesa infantil + 10 sillas","1 juego: billar, futbolito o boliche"],tema:true,juego:true},
+ {id:"trampolin",nombre:"Trampolín + Inflable",c:"#1aa7ec",tag:"Doble diversión",precio:1200,incluye:["Trampolín con red","1 inflable","1 mesa infantil + 10 sillas"]},
+ {id:"pelotas",nombre:"Inflable con agua o pelotas",c:"#13b28a",tag:"Tú eliges",precio:1300,incluye:["Inflable para llenar con agua o pelotas","5 horas + 1 hora de regalo"]},
+ {id:"acuatico",nombre:"Brincolín acuático",c:"#0091ea",tag:"Para el calor",precio:1700,incluye:["Brincolín acuático","1 mesa infantil + 10 sillas","5 horas + 1 hora de regalo"]}
+];
+var TEMAS=["Sin preferencia","K-Pop Demon Hunters","Lilo y Stitch","Plim Plim","Lara Campos","Bluey","Cars","Mario Bros","Princesa Peach","Kuromi","Spider-Man","Castillo rosa","Clásico multicolor"];
+var MESA=250, JUEGO=500;
+/* Flete estimado por municipio (rango publicado: $250 a $650). Ajusta cada zona según tu experiencia. */
+var FLETE={"San Nicolás de los Garza":[250,300],"Apodaca":[250,400],"General Escobedo":[250,400],"Monterrey":[300,500],"Guadalupe":[300,500],"San Pedro Garza García":[450,650],"Santa Catarina":[500,650],"Juárez":[450,650],"García":[550,650],"Otro municipio":[250,650]};
+
+function $(i){return document.getElementById(i);}
+var fmt=new Intl.NumberFormat("es-MX");
+function m(v){return "$"+fmt.format(v);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+/* tarjetas */
+$("pkGrid").innerHTML=PAQ.map(function(p){
+  var pr=p.lj?'<div class="price">'+m(p.lj)+' <small>lun–jue</small><br>'+m(p.vd)+' <small>vie–dom</small></div>':'<div class="price">'+m(p.precio)+' <small>+ flete</small></div>';
+  return '<article class="pk" style="--c:'+p.c+'"><span class="tag">'+esc(p.tag)+'</span><h3>'+esc(p.nombre)+'</h3>'+pr+'<ul>'+p.incluye.map(function(x){return"<li>"+esc(x)+"</li>";}).join("")+'</ul><a class="btn ghost" href="#cotizar" data-pk="'+p.id+'">Cotizar este</a></article>';
+}).join("");
+$("pkOpts").innerHTML=PAQ.map(function(p){
+  return '<label class="opt"><input type="radio" name="pk" value="'+p.id+'"><span>'+esc(p.nombre)+'<em>'+(p.lj?m(p.lj)+"–"+m(p.vd):m(p.precio))+'</em><small>'+esc(p.incluye[0])+'</small></span></label>';
+}).join("");
+$("tema").innerHTML=TEMAS.map(function(t){return"<option>"+esc(t)+"</option>";}).join("");
+$("muni").innerHTML='<option value="">Elige tu municipio</option>'+Object.keys(FLETE).map(function(k){return"<option>"+esc(k)+"</option>";}).join("");
+var hoy=new Date();hoy.setMinutes(hoy.getMinutes()-hoy.getTimezoneOffset());$("fecha").min=hoy.toISOString().slice(0,10);
+
+[].forEach.call(document.querySelectorAll("[data-pk]"),function(a){a.addEventListener("click",function(){var r=document.querySelector('input[name="pk"][value="'+a.dataset.pk+'"]');if(r){r.checked=true;calc();}});});
+[].forEach.call(document.querySelectorAll("[data-q]"),function(b){b.addEventListener("click",function(){var i=$(b.dataset.q),v=(parseInt(i.value,10)||0)+parseInt(b.dataset.d,10);i.value=Math.max(+i.min,Math.min(+i.max,v));calc();});});
+$("cz").addEventListener("input",calc);$("cz").addEventListener("change",calc);
+
+var DIAS=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+function calc(){
+  var r=document.querySelector('input[name="pk"]:checked'),p=r?PAQ.filter(function(x){return x.id===r.value;})[0]:null;
+  $("wrapTema").style.display=(!p||p.tema)?"":"none";
+  $("wrapJuego").style.display=(p&&p.juego)?"":"none";
+  var f=$("fecha").value,d=f?new Date(f+"T12:00:00"):null,dia=d?d.getDay():null,fin=dia!==null&&(dia===0||dia>=5);
+  $("diaHint").textContent=d?"Es "+DIAS[dia]+": "+(fin?"tarifa de viernes a domingo.":"tarifa de lunes a jueves."):"De lunes a jueves algunos paquetes salen más baratos.";
+  var mesas=Math.max(0,parseInt($("mesas").value,10)||0),juegos=Math.max(0,parseInt($("juegos").value,10)||0);
+  var muni=$("muni").value,fl=FLETE[muni];
+  var falta=[];
+  if(!p)falta.push("Paquete");
+  if(p&&p.juego&&!$("juego").value)falta.push("Juego incluido");
+  if(!f)falta.push("Fecha");else if(f<$("fecha").min)falta.push("Una fecha a partir de hoy");
+  if(!$("hora").value)falta.push("Hora de inicio");
+  if(!muni)falta.push("Municipio");
+  if(!$("colonia").value.trim())falta.push("Colonia");
+  if(!(parseInt($("ninos").value,10)>0))falta.push("Niños aproximados");
+  if(!$("nombre").value.trim())falta.push("Tu nombre");
+  var base=p?(p.lj?(d?(fin?p.vd:p.lj):null):p.precio):null;
+  var h="";
+  if(p)h+="<dt>"+esc(p.nombre)+(p.lj&&d?" ("+(fin?"vie–dom":"lun–jue")+")":"")+"</dt><dd>"+(base!=null?m(base):"elige fecha")+"</dd>";
+  if(mesas)h+="<dt>"+mesas+" mesa"+(mesas>1?"s":"")+" + 10 sillas extra</dt><dd>"+m(mesas*MESA)+"</dd>";
+  if(juegos)h+="<dt>"+juegos+" juego"+(juegos>1?"s":"")+" extra</dt><dd>"+m(juegos*JUEGO)+"</dd>";
+  h+="<dt>Flete"+(muni?" · "+esc(muni):"")+"</dt><dd>"+(fl?(fl[0]===fl[1]?m(fl[0]):m(fl[0])+"–"+m(fl[1])):"$250–$650")+"</dd>";
+  h+="<dt>Horas</dt><dd>5 + 1 de regalo</dd>";
+  $("lines").innerHTML=h;
+  var lo=fl?fl[0]:250,hi=fl?fl[1]:650,sub=(base||0)+mesas*MESA+juegos*JUEGO;
+  if(base!=null){$("tot").textContent=lo===hi?m(sub+lo):m(sub+lo)+" – "+m(sub+hi);$("totNote").textContent=fl?"El rango depende del flete exacto a tu colonia.":"Elige tu municipio para afinar el flete.";}
+  else{$("tot").textContent="—";$("totNote").textContent="";}
+  var s=$("send");
+  if(falta.length){
+    $("state").innerHTML='<div class="miss">Para darte el precio completo falta:<ul>'+falta.map(function(x){return"<li>"+esc(x)+"</li>";}).join("")+"</ul></div>";
+    s.setAttribute("aria-disabled","true");s.style.opacity=".5";s.style.pointerEvents="none";s.href="#";
+  }else{
+    $("state").innerHTML='<div class="ok">¡Listo! Manda tu cotización y te confirmamos disponibilidad.</div>';
+    var fecha=d.toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    var lines=["• Nombre: "+$("nombre").value.trim(),"• Paquete: "+p.nombre+(p.tema?" · Temática: "+$("tema").value:"")+(p.juego?" · Juego: "+$("juego").value:""),"• Fecha: "+fecha+" a las "+$("hora").value,"• Lugar: "+$("colonia").value.trim()+", "+muni,"• Niños aprox.: "+$("ninos").value];
+    if(mesas)lines.push("• Mesas + 10 sillas extra: "+mesas);
+    if(juegos)lines.push("• Juegos extra: "+juegos);
+    lines.push("• Total estimado: "+$("tot").textContent+" (incluye flete estimado)");
+    s.href="https://wa.me/"+WA+"?text="+encodeURIComponent("¡Hola Titi Boom Party! Quiero cotizar mi fiesta:\n"+lines.join("\n"));
+    s.removeAttribute("aria-disabled");s.style.opacity="";s.style.pointerEvents="";
+  }
+}
+calc();
+})();
+</script>
+</body>
+</html>
